@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Product Detail')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <label th:text="${product.productName}" class="display-4">A Tale of Two Cities</label>
+            <p class="lead" th:text="${product.productDesc}">One of Charles Dickens' best creation</p>
+
+            <div class="row border rounded p-3">
+                <div class="col-6">
+                    <img th:src="@{|/product/productimage/${product.imageUrl}|}"
+                         src="../public/img/logo.png" height="500px" width="500px">
+                    </img>
+                </div>
+                <div class="col-6">
+                    <label th:text="'Price : NPR ' + ${product.unitPrice}"/>
+                    <br/>
+                    <label th:text="'Stock : ' + ${product.stockQty}"/>
+                    <br/>
+                    <br/>
+                    <a class="btn btn-success mr-2"
+                       th:href="@{'/customer/product/addtocart/' + ${product.id}}">Buy</a>
+                    <a class="btn btn-primary"
+                       th:href="@{'/customer/product/addtowishlist/' + ${product.id}}">Add to Wishlist</a>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+
+</html>

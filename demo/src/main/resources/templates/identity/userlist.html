@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+<head th:replace="common/header::header (pageTitle='User List')">
+</head>
+
+<body>
+<div th:replace="common/menu::menu"></div>
+<div class="container">
+    <h3>User List</h3>
+
+    <table class="table table-bordered table-striped">
+            <tr>
+                <th>S/No.</th>
+                <th>Name</th>
+                <th>User Type</th>
+                <th>Email ID</th>
+                <!--<th>Password</th>-->
+                <th>Contact No</th>
+                <th>Active</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="user,iterator : ${users}">
+                <td th:text="${iterator.count}">1</td>
+                <td th:text="${user.name}">Shagar</td>
+                <td th:text="${user.userType}">ADMIN</td>
+                <td th:text="${user.emailId}">shagar.upadhyay@gmail.com</td>
+                <!--<td th:text="${user.password}">shagar123</td>-->
+                <td th:text="${user.contactNo}">9851136126</td>
+                <td th:text="${user.active?'Yes':'No'}">Yes</td>
+
+                <td>
+                    <a href="#" th:href="@{${'/identity/user/edit/' + user.id}}">Edit</a>
+                </td>
+                <td>
+                    <a href="#" th:href="@{${'/identity/user/delete/' + user.id}}">Delete</a>
+                </td>
+            </tr>
+        </table>
+</div>
+<footer th:replace="common/footer::footer"></footer>
+    </body>
+</html>

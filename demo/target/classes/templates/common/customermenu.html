@@ -1,0 +1,59 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     th:fragment="cus_menu">
+    <navbar class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/logo.png}" th:width="30" height="24"></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">NIIT e-Commerce<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/customer/wish}">Wishlist
+                        <span th:text="${@sessionDataSet.getWishListSize()}" class="badge badge-dark">7</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/customer/cart}">Cart
+                        <span th:text="${@sessionDataSet.getShoppingCartSize()}" class="badge badge-dark">4</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/customer/orders}">Orders
+                        <span th:text="${@sessionDataSet.getProcessedOrderCount()}" class="badge badge-dark">2</span></a>
+                </li>
+
+                <li class="nav-item dropdown" th:if="${@sessionDataSet.isCustomerLoggedIn()}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <label th:text="${@sessionDataSet.getCustomer().getName()}"/>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/customer/changepassword}">Change Password</a>
+                        <a class="dropdown-item" th:href="@{/customer/updateprofile}">Update Profile</a>
+                        <a class="dropdown-item" th:href="@{/customer/logout}">Logout</a>
+                    </div>
+                </li>
+
+                <li class="nav-item active" th:if="!${@sessionDataSet.isCustomerLoggedIn()}">
+                    <a class="nav-link" href="#" th:href="@{/customer/register}">Register<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item active" th:if="!${@sessionDataSet.isCustomerLoggedIn()}">
+                    <a class="nav-link" href="#" th:href="@{/customer/login}">Login<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </navbar>
+    <!-- Message Div-->
+    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+</div>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+<head th:replace="common/header::header (pageTitle='Role List')">
+</head>
+
+<body>
+<div th:replace="common/menu::menu"></div>
+<div class="container">
+    <h3>Role List</h3>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>S/No.</th>
+            <th>Role Name</th>
+            <th>Role Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="role,iterator : ${roles}">
+            <td th:text="${iterator.count}">1</td>
+            <td th:text="${role.name}">User_List</td>
+            <td th:text="${role.description}">User Listing Page</td>
+            <td>
+                <a href="#" th:href="@{${'/identity/role/edit/' + role.id}}">Edit</a>
+            </td>
+            <td>
+                <a href="#" th:href="@{${'/identity/role/delete/' + role.id}}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<footer th:replace="common/footer::footer"></footer>
+
+</body>
+</html>

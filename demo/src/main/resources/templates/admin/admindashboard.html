@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Welcome to the NIIT Spring Boot E-Commerce Site')">
+    </head>
+
+    <body>
+        <div th:replace="common/menu::menu"></div>
+        <div class="container">
+                <h3>Welcome to NIIT E-Commerce !!!</h3>
+                The time now is: <b th:text="${sysTime}">Current Date and Time</b>
+        </div>
+            <footer th:replace="common/footer::footer"></footer>
+    </body>
+
+</html>

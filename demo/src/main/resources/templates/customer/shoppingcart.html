@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Shopping Cart')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <label class="display-4">Shopping Cart</label>
+
+            <p class="lead" th:if="${@sessionDataSet.getShoppingCartSize()==0}">
+                Shopping Cart is Empty</p>
+
+            <form action="#" th:action="@{/customer/cart}"
+                  th:object="${customer}" method="post"
+                  th:if="!${@sessionDataSet.getShoppingCartSize()==0}">
+
+                <input id="customerId" name="customerId" type="hidden"
+                       th:field="${customer.id}">
+
+                <table class="table table-bordered">
+                <tr>
+                    <th>S/No.</th>
+                    <th>Product Image</th>
+                    <th>Product Information</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Remove</th>
+                </tr>
+                <tr th:each="cart, stat : *{tempShoppingCartList}">
+                    <td th:text="${stat.count}">1</td>
+
+                    <td>
+                        <img th:src="@{|/product/productimage/${cart.product.imageUrl}|}"
+                             src="../public/img/logo.png" height="200px" width="200px">
+                        </img>
+                    </td>
+
+                    <td>
+                        <p><h4 th:text="'Product Category : ' + ${cart.product.productCategory.categoryName}">Books</h4></p>
+                        <p><h5 th:text="'Product Name : ' + ${cart.product.productName}">A Tale of Two Cities</h5></p>
+                        <p class="lead" th:text="${cart.product.productDesc}">One of Charles Dickens' best creation</p>
+                    </td>
+
+                    <td th:id="'unitprice'+${stat.index}"
+                        th:text="${cart.product.unitPrice}">200</td>
+
+                    <td>
+                        <input type="hidden" th:field="*{tempShoppingCartList[__${stat.index}__].id}"/>
+                        <input th:id="'quantity'+${stat.index}" type="number"
+                               th:field="*{tempShoppingCartList[__${stat.index}__].quantity}"
+                               class="form-control"/>
+                    </td>
+
+                    <td th:id="'subtotal'+${stat.index}" class="subtotalprice"
+                        th:text="${cart.product.unitPrice * cart.quantity}">400</td>
+
+                    <td>
+                        <a href="#" th:href="@{${'/customer/product/removefromcart/' + cart.product.id}}">Remove</a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th colspan="5" class="text-right">Total</th>
+                    <th colspan="2" id="grandtotal">100000</th>
+                </tr>
+            </table>
+
+                <div class="text-center">
+                    <input type="submit" value="Check-Out" class="btn btn-primary mr-3"/>
+                    <input type="reset" value="Reset" class="btn btn-secondary"/>
+                </div>
+            </form>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function() {
+
+                calculateSum();
+
+                $("[id^=quantity]").change(function() {
+                    var num = this.id.replace('quantity','');
+                    $("#subtotal"+num).text($("#unitprice"+num).text() * $("#" + this.id).val());
+                    calculateSum();
+                });
+
+                function calculateSum() {
+                    var sum = 0;
+
+                    // iterate through each td based on class and add the values
+                    $(".subtotalprice").each(function() {
+                        var value = $(this).text();
+                        // add only if the value is number
+                        if(!isNaN(value) && value.length != 0) {
+                            sum += parseFloat(value);
+                        }
+                    });
+                    $('#grandtotal').text(sum);
+                };
+            });
+            /*]]>*/
+        </script>
+    </body>
+
+</html>

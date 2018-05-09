@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Order Details')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <label class="display-4">Order Details</label>
+
+            <h5 th:text="${'Order ID : ' + order.id}"></h5>
+            <h5 th:text="${'Order Date : ' + order.orderDate}"></h5>
+            <h5 th:text="${(order.orderStatus=='PROCESSED'?'Estimated Delivery':'Delivered') + ' Date : ' + order.orderDate}"></h5>
+            <h5 th:text="${'Order Price : ' + order.orderPrice}"></h5>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>S/No.</th>
+                    <th>Product Image</th>
+                    <th>Product Information</th>
+                    <th>Purchase Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                <tr th:each="order, stat : ${order.customerOrderDetailList}">
+                    <td th:text="${stat.count}">1</td>
+
+                    <td>
+                        <img th:src="@{|/product/productimage/${order.product.imageUrl}|}"
+                             src="../public/img/logo.png" height="200px" width="200px">
+                        </img>
+                    </td>
+
+                    <td>
+                        <p><h4 th:text="'Product Category : ' + ${order.product.productCategory.categoryName}">Books</h4></p>
+                        <p><h5 th:text="'Product Name : ' + ${order.product.productName}">A Tale of Two Cities</h5></p>
+                        <p class="lead" th:text="${order.product.productDesc}">One of Charles Dickens' best creation</p>
+                    </td>
+
+                    <td th:id="'purchaseprice'+${stat.index}"
+                        th:text="${order.purchasePrice}">200</td>
+
+                    <td th:id="'orderQuantity'+${stat.index}"
+                        th:text="${order.orderQty}">5</td>
+
+                    <td th:id="'subtotal'+${stat.index}" class="subtotalprice"
+                        th:text="${order.purchasePrice * order.orderQty}">1000</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+    </body>
+
+</html>

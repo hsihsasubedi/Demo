@@ -1,0 +1,159 @@
+body > header {
+    background: #eee;
+    padding: 5px;
+}
+
+body > header > a > img, body > header a {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px 5px;
+    font-size: 1.2em;
+}
+
+body > footer {
+    background: #eee;
+    padding: 5px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+#logged-in-info {
+    float: right;
+    margin-top: 18px;
+}
+
+#logged-in-info form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.container {
+    padding-bottom: 50px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: #fafafa;
+    border-top: solid 1px #eee;
+    margin-bottom: 0px;
+}
+
+#roleUnorderedList {
+    list-style:none;
+}
+
+/* Sign-In CSS*/
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+/* Input Button to Link CSS*/
+#logOutButton {
+    background:none!important;
+    border:none;
+    padding:0!important;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+input.currency {
+    text-align: right;
+    padding-right: 15px;
+}
+
+/*.form-signin input[type="email"] {*/
+    /*margin-bottom: -1px;*/
+    /*border-bottom-right-radius: 0;*/
+    /*border-bottom-left-radius: 0;*/
+/*}*/
+
+/*.form-signin input[type="password"] {*/
+    /*margin-bottom: 10px;*/
+    /*border-top-left-radius: 0;*/
+    /*border-top-right-radius: 0;*/
+/*}*/
+
+/*!* The switch - the box around the slider *!*/
+/*.switch {*/
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*width: 60px;*/
+    /*height: 34px;*/
+/*}*/
+
+/*!* Hide default HTML checkbox *!*/
+/*.switch input {display:none;}*/
+
+/*!* The slider *!*/
+/*.slider {*/
+    /*position: absolute;*/
+    /*cursor: pointer;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*background-color: #ccc;*/
+    /*-webkit-transition: .4s;*/
+    /*transition: .4s;*/
+/*}*/
+
+/*.slider:before {*/
+    /*position: absolute;*/
+    /*content: "";*/
+    /*height: 26px;*/
+    /*width: 26px;*/
+    /*left: 4px;*/
+    /*bottom: 4px;*/
+    /*background-color: white;*/
+    /*-webkit-transition: .4s;*/
+    /*transition: .4s;*/
+/*}*/
+
+/*input:checked + .slider {*/
+    /*background-color: #2196F3;*/
+/*}*/
+
+/*input:focus + .slider {*/
+    /*box-shadow: 0 0 1px #2196F3;*/
+/*}*/
+
+/*input:checked + .slider:before {*/
+    /*-webkit-transform: translateX(26px);*/
+    /*-ms-transform: translateX(26px);*/
+    /*transform: translateX(26px);*/
+/*}*/
+
+/*!* Rounded sliders *!*/
+/*.slider.round {*/
+    /*border-radius: 34px;*/
+/*}*/
+
+/*.slider.round:before {*/
+    /*border-radius: 50%;*/
+/*}*/
+
+.alert-success {
+	color: green;
+}
+
+.alert-danger {
+	color:red;
+}

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="common/header::header (pageTitle='Update Customer Profile')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Update Customer Profile
+                </div>
+
+                <div class="card-body">
+                    <form action="#" th:action="@{/customer/updateprofile}"
+                          th:object="${customer}" method="post">
+
+                        <input id="customerId" name="customerId" type="hidden"
+                               th:field="${customer.id}">
+
+                        <div class="form-group">
+                            <label for="name">Name: </label>
+                            <input id="name" name="name" type="text"
+                                   th:value="${customer.name}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailId">Email ID: </label>
+                            <input id="emailId" name="emailId" type="email"
+                                   th:value="${customer.emailId}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input id="password" name="password" type="password"
+                                   th:field="${customer.newPassword[0]}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password: </label>
+                            <input id="confirmPassword" name="confirmPassword" type="password"
+                                   th:field="${customer.newPassword[1]}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactNo">Contact No: </label>
+                            <input id="contactNo" name="contactNo" type="text"
+                                   th:value="${customer.contactNo}" class="form-control"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>Billing Address</h4>
+
+                                <input id="billingId" name="billingId" type="hidden"
+                                       th:field="${customer.billingAddress.id}">
+
+                                <label for="state">State: </label>
+                                <select class="form-control" id="state" name="state"
+                                        type="text" th:field="${customer.billingAddress.state.id}">
+                                    <option value="0" label="--- Select State ---"></option>
+                                    <option th:each="state: ${states}"
+                                            th:value="${state.id}"
+                                            th:text="${state.name}">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <input id="billingMunicipalityId" name="billingMunicipalityId" type="hidden"
+                                       th:field="${customer.billingAddress.municipality.id}">
+
+                                <label for="municipality">Municipality: </label>
+                                <select class="form-control" id="municipality" name="municipality"
+                                        type="text" th:field="${customer.billingAddress.municipality.id}">
+                                    <option value="0" label="--- Select Municipality ---"></option>
+                                </select>
+
+                                <br/>
+
+                                <input id="billingWardNo" name="billingWardNo" type="hidden"
+                                       th:field="${customer.billingAddress.wardNo}">
+
+                                <label for="wardNo">Ward Number: </label>
+                                <select class="form-control" id="wardNo" name="wardNo"
+                                        type="text" th:field="${customer.billingAddress.wardNo}">
+                                    <option value="0" label="--- Select Ward Number ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <div class="form-group">
+                                    <label for="streetName">Street Name: </label>
+                                    <input id="streetName" name="streetName" type="text"
+                                           th:field="${customer.billingAddress.streetName}"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <h4>Shipping Address</h4>
+
+                                <input id="shippingId" name="shippingId" type="hidden"
+                                       th:field="${customer.shippingAddress.id}">
+
+                                <label for="shipping-state">State: </label>
+                                <select class="form-control" id="shipping-state" name="shipping-state"
+                                        type="text" th:field="${customer.shippingAddress.state.id}">
+                                    <option value="0" label="--- Select State ---"></option>
+                                    <option th:each="state: ${states}"
+                                            th:value="${state.id}"
+                                            th:text="${state.name}">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <input id="shippingMunicipalityId" name="shippingMunicipalityId" type="hidden"
+                                       th:field="${customer.shippingAddress.municipality.id}">
+
+                                <label for="shipping-municipality">Municipality: </label>
+                                <select class="form-control" id="shipping-municipality" name="shipping-municipality"
+                                        type="text" th:field="${customer.shippingAddress.municipality.id}">
+                                    <option value="0" label="--- Select Municipality ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <input id="shippingWardNo" name="shippingWardNo" type="hidden"
+                                       th:field="${customer.shippingAddress.wardNo}">
+
+                                <label for="shipping-wardNo">Ward Number: </label>
+                                <select class="form-control" id="shipping-wardNo" name="shipping-wardNo"
+                                        type="text" th:field="${customer.shippingAddress.wardNo}">
+                                    <option value="0" label="--- Select Ward Number ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <div class="form-group">
+                                    <label for="shipping-streetName">Street Name: </label>
+                                    <input id="shipping-streetName" name="shipping-streetName" type="text"
+                                           th:field="${customer.shippingAddress.streetName}"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <input type="submit" value="Save" class="btn btn-primary mr-3"/>
+                            <input type="reset" value="Reset" class="btn btn-secondary"/>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function onStateChange(stateId, bilMulId) {
+                $.get( "municipality/" + stateId, function( data ) {
+                    $("#municipality").empty();
+                    $("#wardNo").empty();
+                    var option = "<option value = '0'>--- Select Municipality ---</option>";
+                    $("#municipality").append(option);
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#wardNo").append(option);
+                    data.forEach(function(item, i) {
+                        option = '<option value = "' + item.id + '" ' + (bilMulId==item.id?'selected':'') + '>' + item.name +  '</option>';
+                        $("#municipality").append(option);
+                    });
+                });
+            };
+
+            function onMunicipalityChange(municipalityId, bilWardId) {
+                $.get( "ward/" + municipalityId, function( data ) {
+                    $("#wardNo").empty();
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#wardNo").append(option);
+                    for(counter=1; counter < data + 1; counter++){
+                        option = '<option value = "' + counter + '" ' + (bilWardId==counter?'selected':'') + '>' + counter +  '</option>';
+                        $("#wardNo").append(option);
+                    }
+                });
+            };
+
+            function onShippingStateChange(stateId, shipMulId) {
+                $.get( "municipality/" + stateId, function( data ) {
+                    $("#shipping-municipality").empty();
+                    $("#shipping-wardNo").empty();
+                    var option = "<option value = '0'>--- Select Municipality ---</option>";
+                    $("#shipping-municipality").append(option);
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#shipping-wardNo").append(option);
+                    data.forEach(function(item, i) {
+                        option = '<option value = "' + item.id + '" ' + (shipMulId==item.id?'selected':'') + '>' + item.name +  '</option>';
+                        $("#shipping-municipality").append(option);
+                    });
+                });
+            };
+
+            function onShippingMunicipalityChange(municipalityId, shipWardId) {
+                $.get( "ward/" + municipalityId, function( data ) {
+                    $("#shipping-wardNo").empty();
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#shipping-wardNo").append(option);
+                    for(counter=1; counter < data + 1; counter++){
+                        option = '<option value = "' + counter + '" ' + (shipWardId==counter?'selected':'') + '>' + counter +  '</option>';
+                        $("#shipping-wardNo").append(option);
+                    }
+                });
+            };
+
+            $(document).ready(function() {
+                var stateId = $("#state").val();
+                var shippingStateId = $("#shipping-state").val();
+                var municipalityId = $("#billingMunicipalityId").val();
+                var shippingMunicipalityId = $("#shippingMunicipalityId").val();
+
+                if(stateId !== null) {
+                    var bilMulId = $("#billingMunicipalityId").val();
+                    onStateChange(stateId, bilMulId);
+                    $("#municipality").val(bilMulId).change();
+                    $("#billingMunicipalityId").remove();
+
+                    var bilWardId = $("#billingWardNo").val();
+                    onMunicipalityChange(bilMulId, bilWardId);
+                    $("#wardNo").val(bilWardId);
+                    $("#billingWardNo").remove();
+                } else if(municipalityId !== null) {
+                    var bilWardId = $("#billingWardNo").val();
+                    onMunicipalityChange(municipalityId, bilWardId);
+                    $("#wardNo").val(bilWardId);
+                    $("#billingWardNo").remove();
+                }
+
+                if(shippingStateId !== null) {
+                    var shipMulId = $("#shippingMunicipalityId").val();
+                    onShippingStateChange(shippingStateId, shipMulId);
+                    $("#shipping-municipality").val(shipMulId);
+                    $("#shippingMunicipalityId").remove();
+
+                    var shipWardId = $("#shippingWardNo").val();
+                    onShippingMunicipalityChange(shipMulId, shipWardId);
+                    $("#shipping-wardNo").val(shipWardId);
+                    $("#shippingWardNo").remove();
+                } else if(shippingMunicipalityId !== null) {
+                    var shipWardId = $("#shippingWardNo").val();
+                    onShippingMunicipalityChange(shippingMusnicipalityId, shipWardId);
+                    $("#shipping-wardNo").val(shipWardId);
+                    $("#shippingWardNo").remove();
+                }
+
+                $("#state").change(function() {
+                    var stateId = $("#state").val();
+                    onStateChange(stateId);
+                });
+
+                $("#municipality").change(function() {
+                    var municipalityId = $("#municipality").val();
+                    onMunicipalityChange(municipalityId);
+                });
+
+                $("#shipping-state").change(function() {
+                    var stateId = $("#shipping-state").val();
+                    onShippingStateChange(stateId);
+                });
+
+                $("#shipping-municipality").change(function() {
+                    var municipalityId = $("#shipping-municipality").val();
+                    onShippingMunicipalityChange(municipalityId);
+                });
+            });
+            /*]]>*/
+        </script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='NIIT e-Commerce Login')">
+    </head>
+
+    <body class="text-center">
+        <form class="form-signin" th:action="@{/customer/login}" method="post" th:object="${customer}">
+            <img class="mb-4" src="../public/img/logo.png" th:src="@{/img/logo.png}"
+                 alt="App Logo" width="200" height="160">
+            <h3>NIIT e-Commerce</h3>
+            <input id="emailId" name="emailId"
+                   th:value="${customer.emailId}" class="form-control"
+                   placeholder="Email Address" required autofocus/>
+
+            <br />
+
+            <input id="password" name="password" type="password"
+                   th:value="${customer.password}" class="form-control"
+                   placeholder="Password" required/>
+
+            <a href="#" th:href="@{/customer/forgotpassword}">Forgot Password</a>
+            <br/>
+            <br/>
+
+            <!-- Message Div-->
+            <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+
+            <input type="submit" value="Login"
+                   class="btn btn-lg btn-primary" btn-block/>
+
+        </form>
+
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+
+</html>

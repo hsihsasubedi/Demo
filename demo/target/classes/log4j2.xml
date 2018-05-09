@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30" status="debug">
+	<!-- monitorInterval: automatic reload every 30sec on changes -->
+	<!-- status: log4j2 internal logging (not for the app) -->
+
+	<Properties>
+		<Property name="log-path">D:\\Project_Docs\\NIIT-DEMO\\logs</Property>
+		<!--<Property name="log-path">/home/dd/NIIT-DEMO/logs</Property>-->
+	</Properties>
+
+	<Appenders>
+		<!-- the standard-console-appender -->
+		<Console name="appender-Console-all" target="SYSTEM_OUT">
+			<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />-->
+			<PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} [%c{1}-%L] :: %m %n" />
+		</Console>
+
+		<RollingRandomAccessFile name="niit-demo-all"
+								 fileName="${log-path}/niit-demo-all.log"
+								 filePattern="${log-path}/niit-demo-all-%d{yyyy-MM-dd}-%i.log"
+								 append="true">
+			<PatternLayout>
+				<Pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} [%c{1}-%L] :: %m %n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="50 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="100"/>
+		</RollingRandomAccessFile>
+
+		<RollingRandomAccessFile name="niit-demo-error"
+								 fileName="${log-path}/niit-demo-error.log"
+								 filePattern="${log-path}/niit-demo-error-%d{yyyy-MM-dd}-%i.log"
+								 append="true">
+			<PatternLayout>
+				<Pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} [%c{1}-%L] :: %m %n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="50 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="100"/>
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<!-- Every configuration must have a root logger. 
+        If one is not configured the default root LoggerConfig is ERROR with Console appender attached. -->
+		<Root level="TRACE">
+			<AppenderRef ref="appender-Console-all" />
+			<AppenderRef ref="std-console"/>
+			<AppenderRef ref="niit-demo-all"/>
+			<AppenderRef ref="niit-demo-error" level="ERROR"/>
+		</Root>
+
+		<Logger name="org.springframework" level="INFO"/>
+		<Logger name="org.apache.commons" level="INFO"/>
+
+		<Logger name="org.hibernate" level="INFO"/>
+		<Logger name="org.hibernate.SQL" level="DEBUG"/>
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+
+	</Loggers>
+</Configuration>

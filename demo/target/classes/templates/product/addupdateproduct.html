@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+    <head th:replace="common/header::header (pageTitle='Product')">
+    </head>
+
+    <body>
+        <div th:replace="common/menu::menu"></div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Add Product
+                </div>
+
+                <div class="card-body">
+                    <form action="#" th:action="@{/product/product}"
+                          th:object="${product}" method="post" enctype="multipart/form-data">
+
+                        <input id="id" name="id" type="hidden" th:value="${product.id}">
+
+                        <div class="form-group">
+                            <label for="productCategoryId">Product Category: </label>
+                            <select class="form-control" id="productCategoryId"
+                                    name="productCategoryId" th:field="*{productCategory.id}">
+                                <option th:each="proCat: ${productcategories}"
+                                        th:value="${proCat.id}"
+                                        th:text="${proCat.categoryName}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productName">Product Name: </label>
+                            <input id="productName" name="productName" type="text"
+                                   th:value="${product.productName}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="productName">Product Description: </label>
+                            <input id="productDesc" name="productDesc" type="text"
+                                   th:value="${product.productDesc}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unitPrice">Unit Price: </label>
+                            <input id="unitPrice" name="unitPrice" type="number"
+                                   th:value="${product.unitPrice}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stockQty">Stock Quantity: </label>
+                            <input id="stockQty" name="stockQty" type="number"
+                                   th:value="${product.stockQty}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>In Stock: </label>
+                            <input id="inStock" name="inStock"
+                                   type="checkbox" th:field="${product.inStock}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Is Available: </label>
+                            <input id="available" name="available"
+                                   type="checkbox" th:field="${product.available}"/>
+                        </div>
+
+                        <div class="form-group" th:if="${product.imageUrl==null}">
+                            <label>Picture: </label>
+                            <input id="multipartFile" name="multipartFile"
+                                   accept="image/jpeg, image/png" class="form-control"
+                                   type="file" th:value="${product.multipartFile}"/>
+                        </div>
+
+                        <div class="form-group" th:if="${product.imageUrl!=null}">
+                            <label>Uploaded Picture: </label>
+                            <a href="#" th:href="@{'/product/productimage/delete/' + ${product.id}}">
+                                <img th:src="@{|/product/productimage/${product.imageUrl}|}"
+                                     src="../public/img/logo.png" class="img-thumbnail rounded">
+                                </img>
+                            </a>
+                        </div>
+
+                        <input type="submit" value="Save" class="btn btn-primary"/>
+                        <input type="reset" value="Reset" class="btn btn-secondary"/>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+</html>

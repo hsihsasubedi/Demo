@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+    <head th:replace="common/header::header (pageTitle='Product Category List')">
+    </head>
+
+    <body>
+        <div th:replace="common/menu::menu"></div>
+        <div class="container">
+            <h3>Product Category List</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>S/No.</th>
+                    <th>Category Name</th>
+                    <th>Category Description</th>
+                    <th colspan="2">Actions</th>
+                </thead>
+                <tbody>
+                <tr th:each="proCat,iterator : ${productcategories}">
+                    <td th:text="${iterator.count}">1</td>
+                    <td th:text="${proCat.categoryName}">Book</td>
+                    <td th:text="${proCat.categoryDesc}">All the Books are listed here</td>
+                    <td>
+                        <a href="#" th:href="@{${'/product/productcategory/edit/' + proCat.id}}">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{${'/product/productcategory/delete/' + proCat.id}}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+</html>

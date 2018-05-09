@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Check-Out')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <label class="display-4">Check-Out</label>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>S/No.</th>
+                    <th>Product Image</th>
+                    <th>Product Information</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                <tr th:each="cart,iterator : ${@sessionDataSet.getShoppingCart()}">
+                    <td th:text="${iterator.count}">1</td>
+
+                    <td>
+                        <img th:src="@{|/product/productimage/${cart.product.imageUrl}|}"
+                             src="../public/img/logo.png" height="200px" width="200px">
+                        </img>
+                    </td>
+
+                    <td>
+                        <p><h4 th:text="'Product Category : ' + ${cart.product.productCategory.categoryName}">Books</h4></p>
+                        <p><h5 th:text="'Product Name : ' + ${cart.product.productName}">A Tale of Two Cities</h5></p>
+                        <p class="lead" th:text="${cart.product.productDesc}">One of Charles Dickens' best creation</p>
+                    </td>
+
+                    <td th:id="'unitprice'+${iterator.count}"
+                        th:text="${cart.product.unitPrice}">200</td>
+
+                    <td th:id="'quantity'+${iterator.count}" name="quantity" type="number"
+                        th:text="${cart.quantity}">2</td>
+
+                    <td th:id="'subtotal'+${iterator.count}" class="subtotalprice"
+                        th:text="${cart.product.unitPrice * cart.quantity}">400</td>
+                </tr>
+                <tr>
+                    <th colspan="5" class="text-right">Total</th>
+                    <th id="grandtotal">100000</th>
+                </tr>
+            </table>
+
+            <form>
+                <div class="text-center">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#checkoutModal">
+                        Make Payment
+                    </button>
+                    <!--<input type="button" th:action="@{/customer/check-out}"-->
+                           <!--value="Make Payment" class="btn btn-primary mr-3"/>-->
+                    <button type="submit" th:formaction="@{/customer/cart}"
+                            class="btn btn-secondary">Back to Cart</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="checkoutModal" tabindex="-1"
+             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Payment Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Confirm Payment of  NPR <label id="checkoutAmt"></label> ?
+                    </div>
+                    <form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"
+                                    th:formaction="@{/customer/order/payment}">Confirm</button>
+                            <button type="submit" class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function() {
+                var sum = 0.00;
+
+                // iterate through each td based on class and add the values
+                $(".subtotalprice").each(function() {
+                    var value = $(this).text();
+                    // add only if the value is number
+                    if(!isNaN(value) && value.length != 0) {
+                        sum += parseFloat(value);
+                    }
+                });
+                $('#grandtotal').text(sum);
+                $('#checkoutAmt').text(sum);
+            });
+            /*]]>*/
+        </script>
+    </body>
+</html>

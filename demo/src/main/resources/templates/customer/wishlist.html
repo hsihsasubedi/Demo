@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header::header (pageTitle='Wish List')">
+</head>
+
+<body>
+<div th:replace="common/customermenu::cus_menu"></div>
+
+<div class="container">
+    <label class="display-4">Wish List</label>
+    <p class="lead" th:if="${@sessionDataSet.getWishListSize()==0}">
+        Wish-List is Empty</p>
+
+    <table class="table table-bordered"
+           th:if="!${@sessionDataSet.getWishListSize()==0}">
+        <tr>
+            <th>S/No.</th>
+            <th>Product Image</th>
+            <th>Product Information</th>
+            <th>Added Date</th>
+            <th>Added Price</th>
+            <th>Current Price</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr th:each="wish,iterator : ${@sessionDataSet.getWishListList()}">
+            <td th:text="${iterator.count}">1</td>
+
+            <td>
+                <img th:src="@{|/product/productimage/${wish.product.imageUrl}|}"
+                     src="../public/img/logo.png" height="200px" width="200px">
+                </img>
+            </td>
+
+            <td>
+                <p><h4 th:text="'Product Category : ' + ${wish.product.productCategory.categoryName}">Books</h4></p>
+                <p><h5 th:text="'Product Name : ' + ${wish.product.productName}">A Tale of Two Cities</h5></p>
+                <p class="lead" th:text="${wish.product.productDesc}">One of Charles Dickens' best creation</p>
+            </td>
+
+            <td th:date="${wish.wishlistAddedDate}">2018-02-08</td>
+
+            <td th:text="${wish.wishlistAddedPrice}">200</td>
+
+            <td th:text="${wish.product.unitPrice}">250</td>
+
+            <td>
+                <a href="#" th:href="@{${'/customer/product/addtocartfromwishlist/' + wish.product.id}}">Add to Cart</a>
+            </td>
+
+            <td>
+                <a href="#" th:href="@{${'/customer/product/removefromwishlist/' + wish.product.id}}">Remove</a>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+<footer th:replace="common/footer::footer"></footer>
+</body>
+
+</html>

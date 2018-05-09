@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+    <head th:replace="common/header::header (pageTitle='Product List')">
+    </head>
+
+    <body>
+        <div th:replace="common/menu::menu"></div>
+        <div class="container">
+            <h3>Product List</h3>
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>S/No.</th>
+                    <th>Product Name</th>
+                    <th>Product Description</th>
+                    <th>Product Category</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                <tr th:each="pro,iterator : ${products}">
+                    <td th:text="${iterator.count}">1</td>
+                    <td th:text="${pro.productName}">Alice in Wonderland</td>
+                    <td th:text="${pro.productDesc}">One of the most famous children books</td>
+                    <td th:text="${pro.productCategory.categoryName}">Books</td>
+                    <td>
+                        <a href="#" th:href="@{${'/product/product/edit/' + pro.id}}">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{${'/product/product/delete/' + pro.id}}">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+</html>

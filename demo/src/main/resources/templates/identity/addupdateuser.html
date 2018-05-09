@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="org.thymeleaf.org">
+    <head th:replace="common/header::header (pageTitle='User')">
+    </head>
+
+    <body>
+        <div th:replace="common/menu::menu"></div>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Add User
+                </div>
+
+                <div class="card-body">
+
+                <form action="#" th:action="@{/identity/user}"
+                      th:object="${user}" method="post">
+
+                    <input id="id" name="id" type="hidden" th:value="${user.id}"/>
+
+                    <div class="form-group">
+                        <label for="name">Name: </label>
+                        <input id="name" name="name" type="text"
+                               th:value="${user.name}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userType">User Type: </label>
+                        <select class="form-control" id="userType" name="userType"
+                                type="text" th:value="${user.userType}">
+                            <option th:each="usrType: ${user.userTypes}"
+                                    th:value="${usrType}"
+                                    th:text="${usrType}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailId">Email ID: </label>
+                        <input id="emailId" name="emailId" type="email"
+                               th:value="${user.emailId}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password: </label>
+                        <input id="password" name="password" type="password"
+                               th:value="${user.password}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactNo">Contact No: </label>
+                        <input id="contactNo" name="contactNo" type="text"
+                               th:value="${user.contactNo}" class="form-control"/>
+                    </div>
+
+                    <!--<div>-->
+                        <!--&lt;!&ndash;<label for="active">Active: </label>&ndash;&gt;-->
+                        <!--<label class="switch">-->
+                            <!--<input id="active" name="active" type="checkbox"-->
+                                   <!--th:field="${user.active}" />-->
+                            <!--<span class="slider round"></span>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label>Active: </label>
+                        <input id="active" name="active" type="checkbox" th:field="${user.active}"/>
+                    </div>
+
+                    <div class="form-check">
+                        <label>Roles: </label>
+                        <ul id="roleUnorderedList">
+                            <li th:each="role, stat: *{roleList}">
+                                <input type="hidden"
+                                       th:id="'selectedRoleId' + ${stat.index}"
+                                       th:field="*{roleList[__${stat.index}__].id}"/>
+                                <input type="checkbox"
+                                       th:id="'selectedRole' + ${stat.index}"
+                                       th:field="*{roleList[__${stat.index}__].selected}"/>
+                                <label
+                                        th:for="#{'selectedRole' + ${stat.index}}"
+                                        th:text="${role.name}"></label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+                    <input type="reset" value="Reset" class="btn btn-secondary"/>
+
+                </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+</html>

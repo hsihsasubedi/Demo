@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Welcome to the NIIT Spring Boot E-Commerce Site')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <div th:each="proCat : ${proCatList}" th:if="${proCat.productList!=null && !proCat.productList.isEmpty()}">
+                <a href="#" th:href="@{'/customer/productcategory/' + ${proCat.id}}"
+                   th:text="${proCat.categoryName}" class="display-4"></a>
+                <div class="row">
+                    <div class="col-3 text-center border rounded mx-4 py-1" th:each="pro : ${proCat.productList}">
+                        <a href="#" th:href="@{'/customer/productdetail/' + ${pro.id}}">
+                            <img th:src="@{|/product/productimage/${pro.imageUrl}|}"
+                                 src="../public/img/logo.png" height="200px" width="200px">
+                            </img>
+                        </a>
+                        <br/>
+                        <label th:text="${pro.productName}"/>
+                        <br/>
+                        <label th:text="'NPR ' + ${pro.unitPrice}"/>
+                        <br/>
+                        <a class="btn btn-success mr-2"
+                           th:href="@{'/customer/product/addtocart/' + ${pro.id}}">Buy</a>
+                        <a class="btn btn-primary"
+                           th:href="@{'/customer/product/addtowishlist/' + ${pro.id}}">Add to Wishlist</a>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+    </body>
+
+</html>

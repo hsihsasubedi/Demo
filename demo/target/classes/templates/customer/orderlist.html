@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Customer\'s Orders')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <label class="display-4">Customer's Orders</label>
+
+            <ul class="nav nav-tabs" id="orderTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="processed-order-tab"
+                       data-toggle="tab" href="#processedorders" role="tab"
+                       aria-controls="processed-order" aria-selected="true">Processed Orders</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="completed-order-tab"
+                       data-toggle="tab" href="#completedorders" role="tab"
+                       aria-controls="completed-order" aria-selected="false">Completed Orders</a>
+                </li>
+            </ul>
+
+            <br/>
+
+            <div class="tab-content" id="orderTabContent">
+                <div class="tab-pane fade show active" id="processedorders"
+                     role="tabpanel" aria-labelledby="processed-order-tab">
+
+                    <p class="lead" th:if="${processedorders.isEmpty()}">
+                        There are no active Processed Orders.</p>
+
+                    <table class="table table-bordered" th:if="!${processedorders.isEmpty()}">
+                        <tr>
+                            <th>S/No.</th>
+                            <th>Order ID</th>
+                            <th>Order Price</th>
+                            <th>Order Date</th>
+                            <th>Estimated Delivery Date</th>
+                            <th>Order Details</th>
+                        </tr>
+
+                        <tr th:each="order, stat : ${processedorders}">
+                            <td th:text="${stat.count}">1</td>
+
+                            <td th:text="${order.id}">3</td>
+
+                            <td th:text="${order.orderPrice}">1</td>
+
+                            <td th:text="${order.orderDate}">2017-10-04</td>
+
+                            <td th:text="${order.deliveryDate}">2017-10-14</td>
+
+                            <td>
+                                <a href="#" th:href="@{${'/customer/order-detail/' + order.id}}">Order Details</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="completedorders"
+                     role="tabpanel" aria-labelledby="completed-order-tab">
+
+                    <p class="lead" th:if="${completedorders.isEmpty()}">
+                        There are no Completed Orders.</p>
+
+                    <table class="table table-bordered" th:if="!${completedorders.isEmpty()}">
+                        <tr>
+                            <th>S/No.</th>
+                            <th>Order ID</th>
+                            <th>Order Price</th>
+                            <th>Order Date</th>
+                            <th>Delivered Date</th>
+                            <th>Order Details</th>
+                        </tr>
+
+                        <tr th:each="order, stat : ${completedorders}">
+                            <td th:text="${stat.count}">1</td>
+
+                            <td th:text="${order.id}">3</td>
+
+                            <td th:text="${order.orderPrice}">1</td>
+
+                            <td th:text="${order.orderDate}">2017-10-04</td>
+
+                            <td th:text="${order.deliveryDate}">2017-10-14</td>
+
+                            <td>
+                                <a href="#" th:href="@{${'/customer/order-detail/' + order.id}}">Order Details</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+    </body>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="common/header::header (pageTitle='Register Customer')">
+    </head>
+
+    <body>
+        <div th:replace="common/customermenu::cus_menu"></div>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    Register Customer
+                </div>
+
+                <div class="card-body">
+                    <form action="#" th:action="@{/customer/register}"
+                          th:object="${customer}" method="post">
+
+                        <div class="form-group">
+                            <label for="name">Name: </label>
+                            <input id="name" name="name" type="text"
+                                   th:value="${customer.name}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailId">Email ID: </label>
+                            <input id="emailId" name="emailId" type="email"
+                                   th:value="${customer.emailId}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input id="password" name="password" type="password"
+                                   th:field="${customer.newPassword[0]}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password: </label>
+                            <input id="confirmPassword" name="confirmPassword" type="password"
+                                   th:field="${customer.newPassword[1]}" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactNo">Contact No: </label>
+                            <input id="contactNo" name="contactNo" type="text"
+                                   th:value="${customer.contactNo}" class="form-control"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>Billing Address</h4>
+
+                                <label for="state">State: </label>
+                                <select class="form-control" id="state" name="state"
+                                        type="text" th:field="${customer.billingAddress.state.id}">
+                                    <option value="0" label="--- Select State ---"></option>
+                                    <option th:each="state: ${states}"
+                                            th:value="${state.id}"
+                                            th:text="${state.name}">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <label for="municipality">Municipality: </label>
+                                <select class="form-control" id="municipality" name="municipality"
+                                        type="text" th:field="${customer.billingAddress.municipality.id}">
+                                    <option value="0" label="--- Select Municipality ---"></option>
+                                </select>
+
+                                <br/>
+
+                                <label for="wardNo">Ward Number: </label>
+                                <select class="form-control" id="wardNo" name="wardNo"
+                                        type="text" th:field="${customer.billingAddress.wardNo}">
+                                    <option value="0" label="--- Select Ward Number ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <div class="form-group">
+                                    <label for="streetName">Street Name: </label>
+                                    <input id="streetName" name="streetName" type="text"
+                                           th:field="${customer.billingAddress.streetName}"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <h4>Shipping Address</h4>
+
+                                <label for="shipping-state">State: </label>
+                                <select class="form-control" id="shipping-state" name="shipping-state"
+                                        type="text" th:field="${customer.shippingAddress.state.id}">
+                                    <option value="0" label="--- Select State ---"></option>
+                                    <option th:each="state: ${states}"
+                                            th:value="${state.id}"
+                                            th:text="${state.name}">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <label for="shipping-municipality">Municipality: </label>
+                                <select class="form-control" id="shipping-municipality" name="shipping-municipality"
+                                        type="text" th:field="${customer.shippingAddress.municipality.id}">
+                                    <option value="0" label="--- Select Municipality ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <label for="shipping-wardNo">Ward Number: </label>
+                                <select class="form-control" id="shipping-wardNo" name="shipping-wardNo"
+                                        type="text" th:field="${customer.shippingAddress.wardNo}">
+                                    <option value="0" label="--- Select Ward Number ---">
+                                    </option>
+                                </select>
+
+                                <br/>
+
+                                <div class="form-group">
+                                    <label for="shipping-streetName">Street Name: </label>
+                                    <input id="shipping-streetName" name="shipping-streetName" type="text"
+                                           th:field="${customer.shippingAddress.streetName}"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <input type="submit" value="Save" class="btn btn-primary mr-3"/>
+                            <input type="reset" value="Reset" class="btn btn-secondary"/>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="common/footer::footer"></footer>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function onStateChange() {
+                var state = $("#state").val();
+                $.get( "municipality/" + state, function( data ) {
+                    $("#municipality").empty();
+                    $("#wardNo").empty();
+                    var option = "<option value = '0'>--- Select Municipality ---</option>";
+                    $("#municipality").append(option);
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#wardNo").append(option);
+                    data.forEach(function(item, i) {
+                        option = "<option value = " + item.id + ">" + item.name +  "</option>";
+                        $("#municipality").append(option);
+                    });
+                });
+            };
+
+            function onMunicipalityChange() {
+                var municipality = $("#municipality").val();
+                $.get( "ward/" + municipality, function( data ) {
+                    $("#wardNo").empty();
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#wardNo").append(option);
+                    for(counter=1; counter < data + 1; counter++){
+                        option = "<option value = " + counter + ">" + counter + "</option>";
+                        $("#wardNo").append(option);
+                    }
+                });
+            };
+
+            function onShippingStateChange() {
+                var state = $("#shipping-state").val();
+                $.get( "municipality/" + state, function( data ) {
+                    $("#shipping-municipality").empty();
+                    $("#shipping-wardNo").empty();
+                    var option = "<option value = '0'>--- Select Municipality ---</option>";
+                    $("#shipping-municipality").append(option);
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#shipping-wardNo").append(option);
+                    data.forEach(function(item, i) {
+                        option = "<option value = " + item.id + ">" + item.name +  "</option>";
+                        $("#shipping-municipality").append(option);
+                    });
+                });
+            };
+
+            function onShippingMunicipalityChange() {
+                var municipality = $("#shipping-municipality").val();
+                $.get( "ward/" + municipality, function( data ) {
+                    $("#shipping-wardNo").empty();
+                    option = "<option value = '0'>--- Select Ward Number ---</option>";
+                    $("#shipping-wardNo").append(option);
+                    for(counter=1; counter < data + 1; counter++){
+                        option = "<option value = " + counter + ">" + counter + "</option>";
+                        $("#shipping-wardNo").append(option);
+                    }
+                });
+            };
+
+            $(document).ready(function() {
+                $("#state").change(function() {
+                    onStateChange();
+                });
+
+                $("#municipality").change(function() {
+                    onMunicipalityChange();
+                });
+
+                $("#shipping-state").change(function() {
+                    onShippingStateChange()();
+                });
+
+                $("#shipping-municipality").change(function() {
+                    onShippingMunicipalityChange();
+                });
+
+            });
+            /*]]>*/
+        </script>
+    </body>
+
+</html>
